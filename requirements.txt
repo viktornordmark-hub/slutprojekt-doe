@@ -1,2 +1,3 @@
 # External libraries for slutprojekt-doe
 
+psutil 7.1.0
