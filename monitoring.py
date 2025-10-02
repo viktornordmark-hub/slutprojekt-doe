@@ -1,9 +1,15 @@
 #Lista aktiv övervakning
 import psutil
+import os
 from functions import bytes_to_gb 
 
+if os.name == 'nt':     #windows
+    path_disc = 'c:\\'
+else:                   #mac/linux
+    path_disc = '/'
+
 cpu_usage = psutil.cpu_percent(interval=1) 
-disk_info = psutil.disk_usage('C:\\')
+disk_info = psutil.disk_usage(path_disc)
 ram_info = psutil.virtual_memory()
 
 used_d = bytes_to_gb(disk_info.used) #konvertera använda bytes till gb
