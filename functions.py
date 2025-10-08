@@ -6,4 +6,4 @@ def print_heading(text):
     print("-"*len(text))
 #konvertera bytes till gb
 def bytes_to_gb(bytes_size):
-    return "{:.2f} GB".format(bytes_size / (1024 ** 3))
+    return "{:.2f}".format(bytes_size / (1024 ** 3))
