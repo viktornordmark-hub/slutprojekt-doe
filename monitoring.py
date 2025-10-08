@@ -1,34 +1,32 @@
-#Lista aktiv övervakning
-import time
-import os
+'''System snapshot'''
 import psutil
 from functions import bytes_to_gb
+from functions import check_os
+from functions import print_separator
 
+def system_snapshot():
+    '''Take snapshot of system load'''
+    cpu_usage = psutil.cpu_percent(interval=1)
+    disk_info = psutil.disk_usage(check_os())
+    ram_info = psutil.virtual_memory()
 
-'''if os.name == 'nt':     #windows
-    path_disc = 'c:\\'
-else:                   #mac/linux
-    path_disc = '/'
-    '''
+    #convert bytes to GB
+    used_d = bytes_to_gb(disk_info.used)
+    total_d = bytes_to_gb(disk_info.total)
+    used_ram = bytes_to_gb(ram_info.used)
+    total_ram = bytes_to_gb(ram_info.total)
 
+    # Top frame
+    print_separator(50)
 
-try:
-    while True:
-        cpu_usage = psutil.cpu_percent(interval=1)
-        disk_info = psutil.disk_usage(path_disc)
-        ram_info = psutil.virtual_memory()
-        #konvertera avända bytes till gb
-        used_d = bytes_to_gb(disk_info.used)
-        total_d = bytes_to_gb(disk_info.total)
-        used_ram = bytes_to_gb(ram_info.used)
-        total_ram = bytes_to_gb(ram_info.total)
-        os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"CPU-användning: {cpu_usage}% |")
+    print(f"Diskanvändning: {disk_info.percent}% | "
+            f"{used_d} GB / {total_d} GB.")
+    print(f"RAM-användning: {ram_info.percent}% | "
+            f"{used_ram} GB / {total_ram} GB.")
 
-        print(f"\rCPU-användning: {cpu_usage}%")
-        print(f"Diskanvändning: {disk_info.percent}% " #procent av diskanvändning
-              f"{used_d} GB av {total_d} GB tillgängligt.")
-        print(f"RAM-användning: {ram_info.percent}% " #procent av ramanvändning
-              f"{used_ram} GB av {total_ram} GB tillgängligt.", end="\r\n")
-        time.sleep(0.1)
-except KeyboardInterrupt:
-        print("\nAborting...")
+    # Bottom frame
+    print_separator(50)
+
+    return
+#system_snapshot()

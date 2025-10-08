@@ -1,9 +1,19 @@
 #Starta övervakning
+import time
 import psutil
+#from functions import bytes_to_gb
+from functions import check_os
+
 
 def run_monitor():
-    running = True
-    while run_monitor:
-        cpu_usage = psutil.cpu_percent(interval=1) 
-        disk_info = psutil.disk_usage('C:\\')
-        ram_info = psutil.virtual_memory()
+    try:
+        while True:
+            psutil.cpu_percent(interval=1)
+            psutil.disk_usage(check_os())
+            psutil.virtual_memory()
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+            print("\nAborting...")
+
+
+
