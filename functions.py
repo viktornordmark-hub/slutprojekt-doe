@@ -1,7 +1,14 @@
 '''Gemensamma funktioner'''
 import os
+import keyboard 
 
 
+def any_key_press(event):
+    '''Press any key function'''
+    if event.name == 'esc':
+        keyboard.unhook_all()
+    else: 
+        return
 
 def print_separator(length=30):
     '''Skriver ut en linje med bindestreck'''

@@ -11,7 +11,7 @@ def run_monitor():
             psutil.cpu_percent(interval=1)
             psutil.disk_usage(check_os())
             psutil.virtual_memory()
-            time.sleep(0.1)
+            time.sleep(1)
     except KeyboardInterrupt:
             print("\nAborting...")
 

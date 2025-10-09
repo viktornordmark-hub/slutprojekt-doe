@@ -34,3 +34,5 @@ try:
         
 except KeyboardInterrupt:
     print("\nAborting...")  
+
+#os.system('cls' if os.name == 'nt' else 'clear')

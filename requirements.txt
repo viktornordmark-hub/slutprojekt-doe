@@ -1,3 +1,4 @@
 # External libraries for slutprojekt-doe
 
-psutil 7.1.0
+psutil==7.1.0
+keyboard==0.13.5 
