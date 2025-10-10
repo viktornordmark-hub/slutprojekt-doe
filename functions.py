@@ -15,7 +15,6 @@ except ImportError:
     tty = None  # Not available on Windows
     termios = None
 
-import keyboard
 
 def wait_any_key():
     '''press any key function'''
@@ -34,13 +33,6 @@ def wait_any_key():
                 sys.stdin.read(1) #Wait for key
             finally:
                 termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-
-def any_key_press(event):
-    '''Press any key function'''
-    if event.name == 'esc':
-        keyboard.unhook_all()
-    else:
-        return
 
 def print_separator(length=30):
     '''Skriver ut en linje med bindestreck'''

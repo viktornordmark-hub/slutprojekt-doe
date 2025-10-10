@@ -1,4 +1,4 @@
-import time 
+'''import time 
 import psutil
 import os
 
@@ -36,3 +36,9 @@ except KeyboardInterrupt:
     print("\nAborting...")  
 
 #os.system('cls' if os.name == 'nt' else 'clear')
+
+psutil.cpu_percent(interval=1)
+psutil.disk_usage(check_os())
+psutil.virtual_memory()
+time.sleep(1)
+'''

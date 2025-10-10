@@ -1,4 +1,4 @@
-'''System snapshot'''
+'''System snapshot and setting monitoring'''
 import psutil
 from functions import bytes_to_gb
 from functions import check_os
@@ -30,3 +30,8 @@ def system_snapshot():
 
     return
 #system_snapshot()
+
+def start_monitoring():
+    '''Set monitoring to True'''
+    print("System monitoring started.\nReturning to menu...")
+    return True
