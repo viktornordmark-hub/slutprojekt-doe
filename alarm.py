@@ -20,4 +20,3 @@ class Alarm:
             f"{'WARNING ALARM TRIGGERED' if self.triggered else ''}"
         )
 
-print(Alarm)

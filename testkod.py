@@ -2,10 +2,6 @@
 import psutil
 import os
 
-if os.name == 'nt':     #windows
-    path_disc = 'c:\\'
-else:                   #mac/linux
-    path_disc = '/'
 
 def display_usage(cpu_usage, mem_usage, disk_usage, bars=50):
     cpu_percent = cpu_usage / 100.0
