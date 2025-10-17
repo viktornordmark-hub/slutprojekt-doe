@@ -48,3 +48,6 @@ def check_os():
         return 'c:\\'
     else:                   #mac/linux
         return '/'
+def clean_terminal():
+    '''Clear the terminal'''
+    os.system('cls' if os.name == 'nt' else 'clear')

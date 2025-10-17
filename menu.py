@@ -1,13 +1,57 @@
 '''Menu-file for main.py'''
-import os
 import time
 from monitoring import start_monitoring
 from monitoring import system_snapshot
 from functions import wait_any_key
+from functions import clean_terminal
+from alarm import create_some_alarms
+def menu_1(set_monitoring):
+    '''Menu choice 1'''
+    if set_monitoring is True:
+        print("System monitoring already active!")
+        input("Press enter to confirm...")
+        clean_terminal()
+        return True
+    else:
+        set_monitoring = start_monitoring()
+        time.sleep(3)
+        clean_terminal()
+        return True
+
+def menu_2(set_monitoring):
+    '''Send system snapshot if monitoring active'''
+    if set_monitoring is False:
+        print("System monitoring not active!")
+        input("Press enter to return to menu: ")
+        clean_terminal()
+        return False
+    else:
+        system_snapshot()
+        input("Press enter to confirm: ")
+        wait_any_key()
+        clean_terminal()
+        return True
+
+def menu_3():
+    '''create alarms'''
+    return create_some_alarms()
+
+def menu_4(alarm_list):
+    '''show alarms'''
+    if not alarm_list:
+        print("No alarms created yet!")
+        input("Press enter to continue...")
+    else:
+        for alarm in alarm_list:
+            print(alarm)
+        input("Press enter to continue...")
+    clean_terminal()
+
 
 def run_menu():
     '''Run the menu'''
     set_monitoring = False
+    alarm_list = []
     input_menu = True
     while input_menu:
         menu_choice = input(
@@ -17,29 +61,16 @@ def run_menu():
             "4. Visa larm\n"
             "5. Starta övervakningsläge\n"
             "6. Avsluta\n")
-        if menu_choice == '1':
-            if set_monitoring is True:
-                print("System monitoring already active!")
-                input("Press enter to confirm...")
-                os.system('cls' if os.name == 'nt' else 'clear')
-                continue
-            else:
-                set_monitoring = start_monitoring()
-                time.sleep(3)
-                os.system('cls' if os.name == 'nt' else 'clear')
-                continue
-        elif menu_choice == '2':
-            if set_monitoring is False:
-                print("System monitoring not active!")
-                input("Press enter to return to menu: ")
-                os.system('cls' if os.name == 'nt' else 'clear')
-                continue
-            else:
-                system_snapshot()
-                input("Press enter to confirm: ")
-                wait_any_key()
-                os.system('cls' if os.name == 'nt' else 'clear')
-                continue
-
-        else:
-            break
+        match menu_choice:
+            case '1':
+                set_monitoring = menu_1(set_monitoring)
+            case '2':
+                set_monitoring = menu_2(set_monitoring)
+            case '3':
+                alarm_list = menu_3()
+            case '4':
+                menu_4(alarm_list)
+            case '5':
+                break
+            case _:
+                break

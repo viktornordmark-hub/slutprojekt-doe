@@ -1,0 +1,41 @@
+skapa list = []
+
+skapa larm 
+
+create_alarm is True
+
+while create_alarm
+    while True:
+    input
+     1. cpu
+     2. disk
+     3. ram
+        if 
+            cpu
+            break
+        elif 
+            ram
+            break
+        elif
+            disk
+            break
+        else
+            skriv korrekt
+            continue
+input 
+    hur många procent
+    konvertera till int/float
+    if 0-100 ok
+    spara
+
+Skapa ett till?
+create_alarm = input(y/n)
+    while True
+        if y:
+        break
+        elif n: 
+        create_alarm is False
+        break
+        else:
+        'skriv y/n
+        continue

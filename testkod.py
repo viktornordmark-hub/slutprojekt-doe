@@ -37,4 +37,15 @@ psutil.cpu_percent(interval=1)
 psutil.disk_usage(check_os())
 psutil.virtual_memory()
 time.sleep(1)
+
+if set_monitoring is True:
+                print("System monitoring already active!")
+                input("Press enter to confirm...")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                continue
+            else:
+                set_monitoring = start_monitoring()
+                time.sleep(3)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                continue
 '''
