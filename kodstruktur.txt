@@ -39,3 +39,26 @@ create_alarm = input(y/n)
         else:
         'skriv y/n
         continue
+
+Övervakningsläge
+
+print övervakningsläge aktivt!
+time sleep(3)
+clean terminal()
+
+while true
+
+    hämta Övervakning
+        disk memory
+        cpu percent
+        virtual memory
+            omvandla bytes till gb
+
+
+    kontrollera om larm aktiveras
+
+    time.sleep(10)?
+    print 'övervakning aktiv - enter to return
+
+
+for loop lambda key (kolla cj repo)

@@ -1,8 +1,10 @@
 '''System snapshot and setting monitoring'''
+import time
 import psutil
 from functions import bytes_to_gb
 from functions import check_os
-from functions import print_separator
+#from functions import print_separator
+from functions import wait_any_key
 
 def system_snapshot():
     '''Take snapshot of system load'''
@@ -17,16 +19,24 @@ def system_snapshot():
     total_ram = bytes_to_gb(ram_info.total)
 
     # Top frame
-    print_separator(50)
+    #print_separator(50)
+    snapshot = True
+    while snapshot:
+        
+        print(f"CPU-användning: {cpu_usage}% |")
+        print(f"Diskanvändning: {disk_info.percent}% | "
+                f"{used_d} GB / {total_d} GB.")
+        print(f"RAM-användning: {ram_info.percent}% | "
+                f"{used_ram} GB / {total_ram} GB.")
+        if wait_any_key():
+            snapshot = False
+        else:
+            continue
+        time.sleep(3)
 
-    print(f"CPU-användning: {cpu_usage}% |")
-    print(f"Diskanvändning: {disk_info.percent}% | "
-            f"{used_d} GB / {total_d} GB.")
-    print(f"RAM-användning: {ram_info.percent}% | "
-            f"{used_ram} GB / {total_ram} GB.")
 
     # Bottom frame
-    print_separator(50)
+    #print_separator(50)
 
     return
 #system_snapshot()
