@@ -21,7 +21,7 @@ class Alarm:
         '''Print alarm message'''
         return (
             f"{self.alarm_type.upper()}: {self.threshold}% "
-            f"{'WARNING ALARM TRIGGERED' if self.triggered else ''}"
+            f"{'\033[1;3;31mWARNING ALARM TRIGGERED\033[0m' if self.triggered else ''}"
         )
 alarm_list = []
 
@@ -30,7 +30,7 @@ def create_some_alarms():
     create_alarm = True
     while create_alarm:      
         while True:
-            alarm_type = input("Choose type 1-3.\n1. CPU\n2. DISK\n3. RAM\n: ")
+            alarm_type = input("Configure alarm.\n1. CPU\n2. DISK\n3. RAM\n4. Return to menu\n: ")
             match alarm_type:
                 case '1':
                     alarm_type = 'CPU'
@@ -41,10 +41,17 @@ def create_some_alarms():
                 case '3':
                     alarm_type = 'RAM'
                     break
+                case '4':
+                    create_alarm = False
+                    break
                 case _:
-                    print("Please choose number 1-3!")
+                    print("Please choose number 1-4!")
                     continue
-        while True:
+        if not create_alarm:
+            clean_terminal()
+            break
+
+        while create_alarm:
             try:
                 threshold = int(input("Choose warning level (1-100):\n"))
                 if threshold < 1 or threshold > 100:
@@ -57,18 +64,8 @@ def create_some_alarms():
         clean_terminal()
         new_alarm = Alarm(alarm_type, threshold)
         alarm_list.append(new_alarm)
-        another_alarm = input("Do you want to create another alarm? (y/n):\n")
-        match another_alarm.lower():
-            case 'y':
-                clean_terminal()
-                continue
-            case 'n':
-                print("Returning to menu...")
-                time.sleep(3)
-                clean_terminal()
-                create_alarm = False
-            case _:
-                print("Please input (y)es or (n)o.")
+        print(f"Alarm created: {alarm_type} at {threshold}%\n")
+
     return alarm_list
 
 
