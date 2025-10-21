@@ -1,6 +1,7 @@
 '''Gemensamma funktioner'''
 import os
 import sys
+import time
 
 # Platform-specific imports
 try:
@@ -11,28 +12,47 @@ except ImportError:
 try:
     import tty  # pylint: disable=import-error,unused-import
     import termios  # pylint: disable=import-error,unused-import
+    import select # pylint: disable=import-error,unused-import 
 except ImportError:
     tty = None  # Not available on Windows
     termios = None
+    select = None
 
-
-def wait_any_key():
+def wait_any_key(non_blocking=False, timeout=3):
     '''press any key function'''
-    if os.name == 'nt': #windows
-        if msvcrt:
+    if os.name == 'nt' and msvcrt:
+        if non_blocking:
+            if msvcrt.kbhit():
+                msvcrt.getch()
+                return True
+            else:
+                time.sleep(timeout)
+                return False
+        else:
             print("Press any key to return to menu...")
-            msvcrt.getch() #Wait for any key
+            msvcrt.getch()
+            return False
+        
     else: #mac/linux
         if tty and termios:
-            print("Press any key to return to menu...")
-
             fd = sys.stdin.fileno()
-            old_settings = termios.tcgetattr(fd)
-            try:
-                tty.setraw(fd)
-                sys.stdin.read(1) #Wait for key
-            finally:
-                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+            
+            if non_blocking:
+                rlist, _, _ = select.select([sys.stdin], [], [], timeout)
+                if rlist:
+                    sys.stdin.read(1)
+                    return True
+                else:
+                    return False
+            else:
+                print("Press any key to return to menu...")
+                old_settings = termios.tcgetattr(fd)
+                try:
+                    tty.setraw(fd)
+                    sys.stdin.read(1) #Wait for key
+                finally:
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                return True
 
 def print_separator(length=30):
     '''Skriver ut en linje med bindestreck'''
