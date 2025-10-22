@@ -62,3 +62,8 @@ while true
 
 
 for loop lambda key (kolla cj repo)
+by_age = sorted(people, key=lambda person: person["ålder"])
+print(f"\nPersoner sorterade efter ålder:")
+for person in by_age:
+    print(f"  {person['namn']}, {person['ålder']} år, {person['stad']}")
+print()
