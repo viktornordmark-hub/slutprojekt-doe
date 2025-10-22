@@ -1,5 +1,5 @@
 '''Handle and create alarms'''
-import time
+#import time
 from functions import clean_terminal
 
 class Alarm:
