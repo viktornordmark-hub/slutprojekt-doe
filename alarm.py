@@ -20,7 +20,7 @@ class Alarm:
     def __str__(self):
         '''Print alarm message'''
         return (
-            f"{self.alarm_type.upper()}: {self.threshold}% "
+            f"{self.alarm_type}:\t{self.threshold}% "
             f"{'\033[1;3;31mWARNING ALARM TRIGGERED\033[0m' if self.triggered else ''}"
         )
 alarm_list = []
@@ -30,7 +30,7 @@ def create_some_alarms():
     create_alarm = True
     while create_alarm:      
         while True:
-            alarm_type = input("Configure alarm.\n1. CPU\n2. DISK\n3. RAM\n4. Return to menu\n: ")
+            alarm_type = input("Configure alarm.\n1. CPU\n2. DISK\n3. RAM\n4. Return to menu\n:")
             match alarm_type:
                 case '1':
                     alarm_type = 'CPU'
