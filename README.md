@@ -6,7 +6,7 @@ This project monitors CPU, RAM and disk usage.
 
 Clone the repo and create a virtual environment:
 
-### Mac/Linux (bash)
+### Mac (bash)
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -19,7 +19,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### Run the program (Mac/Linux)
+### Run the program (Mac)
 ```bash
 python3 main.py
 ```
