@@ -35,23 +35,26 @@ def wait_any_key(non_blocking=False, timeout=3):
         
     else: #mac/linux
         if tty and termios:
-            fd = sys.stdin.fileno()
+            fd = sys.stdin.fileno() # Get file descriptor for keyboard input (stdin)
             
             if non_blocking:
-                rlist, _, _ = select.select([sys.stdin], [], [], timeout)
+                rlist, _, _ = select.select([sys.stdin], [], [], timeout) 
+                # Use select to wait for timeout(seconds)
+                # rlist will contain stdin if key pressed before timeout
                 if rlist:
-                    sys.stdin.read(1)
+                    sys.stdin.read(1) # Read key press
                     return True
                 else:
-                    return False
+                    return False # If timeout expired without input
             else:
                 print("Press any key to return to menu...")
-                old_settings = termios.tcgetattr(fd)
+                old_settings = termios.tcgetattr(fd) # Save current terminal setting
                 try:
-                    tty.setraw(fd)
-                    sys.stdin.read(1) #Wait for key
+                    tty.setraw(fd) # Set terminal to raw mode (disable line buffering)
+                    sys.stdin.read(1) # Wait for key
                 finally:
-                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                    # Restore terminal to previous settings otherwise terminal will be in raw mode
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings) 
                 return True
 
 def print_separator(length=30):
