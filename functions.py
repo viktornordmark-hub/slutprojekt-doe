@@ -7,12 +7,12 @@ import time
 try:
     import msvcrt  # pylint: disable=import-error,unused-import
 except ImportError:
-    msvcrt = None  # Not available on Unix/Mac
+    msvcrt = None  # Not available on Mac
 
 try:
     import tty  # pylint: disable=import-error,unused-import
     import termios  # pylint: disable=import-error,unused-import
-    import select # pylint: disable=import-error,unused-import 
+    import select # pylint: disable=import-error,unused-import
 except ImportError:
     tty = None  # Not available on Windows
     termios = None
@@ -32,13 +32,13 @@ def wait_any_key(non_blocking=False, timeout=3):
             print("Press any key to return to menu...")
             msvcrt.getch()
             return False
-        
-    else: #mac/linux
+
+    else: # Mac
         if tty and termios:
             fd = sys.stdin.fileno() # Get file descriptor for keyboard input (stdin)
-            
+
             if non_blocking:
-                rlist, _, _ = select.select([sys.stdin], [], [], timeout) 
+                rlist, _, _ = select.select([sys.stdin], [], [], timeout)
                 # Use select to wait for timeout(seconds)
                 # rlist will contain stdin if key pressed before timeout
                 if rlist:
@@ -54,12 +54,8 @@ def wait_any_key(non_blocking=False, timeout=3):
                     sys.stdin.read(1) # Wait for key
                 finally:
                     # Restore terminal to previous settings otherwise terminal will be in raw mode
-                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings) 
+                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
                 return True
-
-def print_separator(length=30):
-    '''Skriver ut en linje med bindestreck'''
-    print("=" * length)
 
 def bytes_to_gb(bytes_size):
     '''Convert bytes to GB'''
@@ -67,10 +63,10 @@ def bytes_to_gb(bytes_size):
 
 def check_os():
     '''Check which OS is running'''
-    if os.name == 'nt':     #windows
+    if os.name == 'nt':     # Windows
         return 'c:\\'
-    else:                   #mac/linux
-        return '/'
+    else:                   # Mac
+        return '/System/Volumes/Data'
 def clean_terminal():
     '''Clear the terminal'''
     os.system('cls' if os.name == 'nt' else 'clear')

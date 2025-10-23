@@ -42,13 +42,14 @@ def menu_2(set_monitoring):
         clean_terminal()
         return True
 
-def menu_3():
+def menu_3(alarm_list):
     '''create alarms'''
     logging.info("User select 3. Create alarm")
     clean_terminal()
-    return create_some_alarms()
+    return create_some_alarms(alarm_list)
 
-def menu_4(alarm_list):
+
+def menu_4(alarm_list: List[Alarm]):
     '''show alarms'''
     logging.info("User select 4. Show alarm")
     clean_terminal()
@@ -76,7 +77,7 @@ def menu_5(alarm_list: List[Alarm], set_monitoring):
     time.sleep(3)
     clean_terminal()
     surv_mode = True
-    
+
     while surv_mode:
         clean_terminal()
         cpu_usage = psutil.cpu_percent(interval=1)
@@ -90,10 +91,52 @@ def menu_5(alarm_list: List[Alarm], set_monitoring):
                 print(alarm)
             elif alarm.alarm_type == 'RAM'and alarm.check_trigger(ram_percent):
                 print(alarm)
-                
+
         print("Monitoring active...\nPress any key to return to menu: ")
         if wait_any_key(non_blocking=True, timeout=3):
             surv_mode = False
             clean_terminal()
             logging.info("User returned to menu")
             break
+
+def menu_6(alarm_list: List[Alarm]):
+    '''Remove alarm'''
+    logging.info("User selected 6. Remove alarm")
+    clean_terminal()
+    if not alarm_list:
+        logging.info("No alarms to remove")
+        print("No active alarms!\nReturning to menu...")
+        time.sleep(3)
+        clean_terminal()
+        return
+    
+    while True:
+        print("Current Alarms")
+        for i, alarm in enumerate(alarm_list):
+            print(f"[{i+1}] {alarm}")
+        alarm_to_remove = input(
+            f"Which alarm would you like to remove? 1-{len(alarm_list)}\n"
+            "Press enter to return to menu\n").strip()
+        if not alarm_to_remove.isdigit():
+            logging.info("User returned to menu")
+            break
+        try:
+            index_to_remove = int(alarm_to_remove)
+            list_index = index_to_remove - 1
+            if 0 <= list_index < len(alarm_list):
+                removed_alarm = alarm_list.pop(list_index)
+                clean_terminal()
+                logging.info("Removed alarm: %s at %s%%",
+                             removed_alarm.alarm_type, removed_alarm.threshold)
+                print(f"{removed_alarm.alarm_type} alarm at {removed_alarm.threshold}% removed.")
+                if not alarm_list:
+                    logging.info("All alarms removed")
+                    print("All alarms removed. Returning to menu...")
+                    time.sleep(3)
+                    break
+            else:
+                print(f"Invalid choice. Please enter a number between 1 and {len(alarm_list)}!")
+        except ValueError:
+            print("Invalid input. Please enter a valid number or return to menu.")
+    clean_terminal()
+

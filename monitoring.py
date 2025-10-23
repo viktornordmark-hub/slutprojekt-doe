@@ -2,7 +2,6 @@
 import psutil
 from functions import bytes_to_gb
 from functions import check_os
-#from functions import print_separator
 from functions import wait_any_key
 from functions import clean_terminal
 
