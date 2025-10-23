@@ -1,4 +1,5 @@
 '''Menu-file for main.py'''
+import logging
 import time
 from typing import List
 import psutil
@@ -14,11 +15,13 @@ def menu_1(set_monitoring):
     '''Menu choice 1'''
     clean_terminal()
     if set_monitoring is True:
+        logging.info("Monitoring already active")
         print("System monitoring already active!")
         input("Press enter to confirm...")
         clean_terminal()
         return True
     else:
+        logging.info("Start monitoring")
         set_monitoring = start_monitoring()
         time.sleep(3)
         clean_terminal()
@@ -28,22 +31,26 @@ def menu_2(set_monitoring):
     '''Send system snapshot if monitoring active'''
     clean_terminal()
     if set_monitoring is False:
+        logging.info("Monitoring not active")
         print("System monitoring not active!")
         input("Press enter to return to menu: ")
         clean_terminal()
         return False
     else:
+        logging.info("List active monitoring")
         system_snapshot()
         clean_terminal()
         return True
 
 def menu_3():
     '''create alarms'''
+    logging.info("Create alarm")
     clean_terminal()
     return create_some_alarms()
 
 def menu_4(alarm_list):
     '''show alarms'''
+    logging.info("Show alarm")
     clean_terminal()
     if not alarm_list:
         print("No alarms created yet!")
@@ -57,6 +64,7 @@ def menu_4(alarm_list):
 
 def menu_5(alarm_list: List[Alarm]):
     '''Surveliance mode'''
+    logging.info("Start monitor mode")
     clean_terminal()
     print("Surveliance mode active!")
     time.sleep(3)
@@ -77,11 +85,8 @@ def menu_5(alarm_list: List[Alarm]):
             elif alarm.alarm_type == 'RAM'and alarm.check_trigger(ram_percent):
                 print(alarm)
                 
-                
-
         print("Monitoring active...\nPress any key to return to menu: ")
         if wait_any_key(non_blocking=True, timeout=3):
             surv_mode = False
             clean_terminal()
             break
-

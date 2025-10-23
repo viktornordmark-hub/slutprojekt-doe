@@ -20,10 +20,10 @@ def system_snapshot():
         total_ram = bytes_to_gb(ram_info.total)
 
         clean_terminal()
-        print(f"CPU-användning: {cpu_usage}% |")
-        print(f"Diskanvändning: {disk_info.percent}% | "
+        print(f"CPU usage:\t {cpu_usage}%  |")
+        print(f"DISK usage:\t {disk_info.percent}% | "
                 f"{used_d} GB / {total_d} GB.")
-        print(f"RAM-användning: {ram_info.percent}% | "
+        print(f"RAM usage:\t {ram_info.percent}% | "
                 f"{used_ram} GB / {total_ram} GB.")
         print("Press any key to return to menu...")
         if wait_any_key(non_blocking=True, timeout=3):

@@ -1,5 +1,6 @@
 '''Handle and create alarms'''
 #import time
+import logging
 from functions import clean_terminal
 
 class Alarm:
@@ -13,6 +14,7 @@ class Alarm:
         '''Return True to trigger alarm'''
         if current_value > self.threshold:
             self.triggered = True
+            logging.info("%s alarm Triggered at %s%%", self.alarm_type, self.threshold)
             return True
         else:
             return False
@@ -30,7 +32,7 @@ def create_some_alarms():
     create_alarm = True
     while create_alarm:      
         while True:
-            alarm_type = input("Configure alarm.\n1. CPU\n2. DISK\n3. RAM\n4. Return to menu\n:")
+            alarm_type = input("Configure alarm.\n1. CPU\n2. DISK\n3. RAM\n4. Return to menu\n")
             match alarm_type:
                 case '1':
                     alarm_type = 'CPU'
@@ -43,9 +45,11 @@ def create_some_alarms():
                     break
                 case '4':
                     create_alarm = False
+                    logging.info("Returned to menu")
                     break
                 case _:
                     print("Please choose number 1-4!")
+                    logging.info("Invalid input")
                     continue
         if not create_alarm:
             clean_terminal()
@@ -61,10 +65,12 @@ def create_some_alarms():
                     break
             except ValueError:
                 print("Input must be number 1-100!")
+                logging.info("Invalid threshold input")
         clean_terminal()
         new_alarm = Alarm(alarm_type, threshold)
         alarm_list.append(new_alarm)
         print(f"Alarm created: {alarm_type} at {threshold}%\n")
+        logging.info("%s alarm configured at %s%%", alarm_type, threshold)
 
     return alarm_list
 

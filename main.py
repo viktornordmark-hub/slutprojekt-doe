@@ -1,4 +1,5 @@
 '''Huvudprogram'''
+import logging
 from menu import menu_1
 from menu import menu_2
 from menu import menu_3
@@ -7,8 +8,14 @@ from menu import menu_5
 from functions import clean_terminal
 
 
+logging.basicConfig(
+    filename='program.log', 
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s')
+
 def run_menu():
     '''Run the menu'''
+    logging.info("Program started. Show menu")
     set_monitoring = False
     alarm_list = []
     input_menu = True
@@ -16,8 +23,8 @@ def run_menu():
         menu_choice = input(
             "1. Start monitoring\n"
             "2. List active monitoring\n"
-            "3. Create larm\n"
-            "4. Show larm\n"
+            "3. Create alarm\n"
+            "4. Show alarm\n"
             "5. Start monitor mode\n"
             "6. Exit\n")
         match menu_choice:
@@ -32,10 +39,12 @@ def run_menu():
             case '5':
                 menu_5(alarm_list)
             case '6':
+                logging.info("Exit program")
                 clean_terminal()
                 print("Program exits.")
                 break
             case _:
+                logging.info("Invalid input in menu")
                 clean_terminal()
                 print("Please choose 1-6!")
 run_menu()
