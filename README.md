@@ -1,6 +1,8 @@
 # System Monitor Project
 **Endproject DOE25**
 This project monitors CPU, RAM and disk usage.
+The user can create, remove and monitor alarms
+related to CPU, RAM and disk.
 
 ## Setup
 
