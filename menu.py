@@ -58,7 +58,7 @@ def menu_4(alarm_list: List[Alarm]):
         input("Press enter to continue...")
     else:
         sorted_alarms = sorted(alarm_list, key=lambda a: a.alarm_type)
-        for alarm_obj in sorted_alarms:
+        for alarm_obj in enumerate(sorted_alarms):
             print(alarm_obj)
         input("Press enter to continue...")
     clean_terminal()
@@ -111,8 +111,9 @@ def menu_6(alarm_list: List[Alarm]):
         return
     
     while True:
-        print("Current Alarms")
-        for i, alarm in enumerate(alarm_list):
+        print("===Current Alarms===")
+        sorted_alarms = sorted(alarm_list, key=lambda a:a.alarm_type)
+        for i, alarm in enumerate(sorted_alarms):
             print(f"[{i+1}] {alarm}")
         alarm_to_remove = input(
             f"Which alarm would you like to remove? 1-{len(alarm_list)}\n"
