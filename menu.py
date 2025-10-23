@@ -1,4 +1,4 @@
-'''Menu-file for main.py'''
+'''Menu functions for main.py'''
 import logging
 import time
 from typing import List
@@ -15,13 +15,13 @@ def menu_1(set_monitoring):
     '''Menu choice 1'''
     clean_terminal()
     if set_monitoring is True:
-        logging.info("Monitoring already active")
+        logging.info("[Menu 1] Monitoring already active")
         print("System monitoring already active!")
         input("Press enter to confirm...")
         clean_terminal()
         return True
     else:
-        logging.info("Start monitoring")
+        logging.info("User select 1. Start monitoring")
         set_monitoring = start_monitoring()
         time.sleep(3)
         clean_terminal()
@@ -31,26 +31,26 @@ def menu_2(set_monitoring):
     '''Send system snapshot if monitoring active'''
     clean_terminal()
     if set_monitoring is False:
-        logging.info("Monitoring not active")
+        logging.info("[Menu 2] Monitoring not active")
         print("System monitoring not active!")
         input("Press enter to return to menu: ")
         clean_terminal()
         return False
     else:
-        logging.info("List active monitoring")
+        logging.info("User select 2. List active monitoring")
         system_snapshot()
         clean_terminal()
         return True
 
 def menu_3():
     '''create alarms'''
-    logging.info("Create alarm")
+    logging.info("User select 3. Create alarm")
     clean_terminal()
     return create_some_alarms()
 
 def menu_4(alarm_list):
     '''show alarms'''
-    logging.info("Show alarm")
+    logging.info("User select 4. Show alarm")
     clean_terminal()
     if not alarm_list:
         print("No alarms created yet!")
@@ -62,15 +62,21 @@ def menu_4(alarm_list):
         input("Press enter to continue...")
     clean_terminal()
 
-def menu_5(alarm_list: List[Alarm]):
-    '''Surveliance mode'''
-    logging.info("Start monitor mode")
+def menu_5(alarm_list: List[Alarm], set_monitoring):
+    '''Surveillance mode'''
+    logging.info("User select 5. Start monitor mode")
     clean_terminal()
-    print("Surveliance mode active!")
+    if set_monitoring is False:
+        logging.info("[Menu 5] Monitoring not active")
+        print("Monitoring is not active!")
+        input("Press enter to return to menu")
+        return False
+    
+    print("Surveillance mode active!")
     time.sleep(3)
     clean_terminal()
     surv_mode = True
-
+    
     while surv_mode:
         clean_terminal()
         cpu_usage = psutil.cpu_percent(interval=1)
@@ -89,4 +95,5 @@ def menu_5(alarm_list: List[Alarm]):
         if wait_any_key(non_blocking=True, timeout=3):
             surv_mode = False
             clean_terminal()
+            logging.info("User returned to menu")
             break
