@@ -57,9 +57,10 @@ def menu_4(alarm_list: List[Alarm]):
         print("No alarms created yet!")
         input("Press enter to continue...")
     else:
-        sorted_alarms = sorted(alarm_list, key=lambda a: a.alarm_type)
-        for alarm_obj in enumerate(sorted_alarms):
-            print(alarm_obj)
+        print("===Active Alarms===")
+        sorted_active_alarms = sorted(alarm_list, key=lambda a: a.alarm_type)
+        for i, alarm_obj in enumerate(sorted_active_alarms):
+            print(f"[{i+1}] {alarm_obj}")
         input("Press enter to continue...")
     clean_terminal()
 
@@ -136,8 +137,8 @@ def menu_6(alarm_list: List[Alarm]):
                     time.sleep(3)
                     break
             else:
+                clean_terminal()
                 print(f"Invalid choice. Please enter a number between 1 and {len(alarm_list)}!")
         except ValueError:
             print("Invalid input. Please enter a valid number or return to menu.")
     clean_terminal()
-
