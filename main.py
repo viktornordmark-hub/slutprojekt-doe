@@ -7,11 +7,11 @@ from menu import menu_4
 from menu import menu_5
 from functions import clean_terminal
 
-
 logging.basicConfig(
     filename='program.log', 
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s')
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 def run_menu():
     '''Run the menu'''
@@ -37,7 +37,7 @@ def run_menu():
             case '4':
                 menu_4(alarm_list)
             case '5':
-                menu_5(alarm_list)
+                menu_5(alarm_list, set_monitoring)
             case '6':
                 logging.info("Exit program")
                 clean_terminal()
