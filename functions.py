@@ -47,7 +47,7 @@ def wait_any_key(non_blocking=False, timeout=3):
                 else:
                     return False # If timeout expired without input
             else:
-                print("Press any key to return to menu...")
+                print("Press enter to return to menu...")
                 old_settings = termios.tcgetattr(fd) # Save current terminal setting
                 try:
                     tty.setraw(fd) # Set terminal to raw mode (disable line buffering)
