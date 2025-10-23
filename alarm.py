@@ -1,7 +1,9 @@
 '''Handle and create alarms'''
-#import time
 import logging
 from functions import clean_terminal
+
+
+alarm_list = []
 
 class Alarm:
     '''class alarm'''
@@ -13,11 +15,13 @@ class Alarm:
     def check_trigger(self, current_value: float) -> bool:
         '''Return True to trigger alarm'''
         if current_value > self.threshold:
-            self.triggered = True
-            logging.info("%s alarm Triggered at %s%%", self.alarm_type, self.threshold)
+            if not self.triggered:
+                self.triggered = True
+                logging.info("%s alarm Triggered at %s%%", self.alarm_type, self.threshold)
             return True
         else:
             return False
+
             
     def __str__(self):
         '''Print alarm message'''
@@ -25,7 +29,6 @@ class Alarm:
             f"{self.alarm_type}:\t{self.threshold}% "
             f"{'\033[1;3;31mWARNING ALARM TRIGGERED\033[0m' if self.triggered else ''}"
         )
-alarm_list = []
 
 def create_some_alarms():
     '''create alarm and store in list'''
