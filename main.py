@@ -46,4 +46,10 @@ def run_menu():
                 logging.info("Invalid input in menu")
                 clean_terminal()
                 print("Please choose 1-7!")
-run_menu()
+
+def main():
+    '''Run program'''
+    run_menu()
+
+if __name__ == "__main__":
+    main()
